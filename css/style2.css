@@ -32,3 +32,10 @@ body {
     text-align: center; /* 追加 */
     margin: 10px auto;
 }
+
+.preview{
+    max-width: 300px;
+    margin-top: 20px;
+    display: none;
+    background-color: #ca0303;
+}
