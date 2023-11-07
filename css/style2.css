@@ -35,7 +35,9 @@ body {
 
 .preview{
     max-width: 300px;
-    margin-top: 20px;
-    display: none;
+    margin: 0 auto;
+    height: auto;
+    /* margin-top: 20px; */
+    /* display: none; */
     background-color: #ca0303;
 }
