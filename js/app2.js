@@ -6,7 +6,6 @@ const comment=$("#comment"); //コメントのオブジェクト情報を取得
 const preview=$("#preview"); //プレビューエリアのオブジェクト情報を取得
 let filedata=null; //ファイルデータを入れる関数
 let count=0; //ドラッグアンドドロップした回数をカウントする用の変数
-
 console.log("変数の定義成功")
 
 $(document).ready(function(){
@@ -69,6 +68,13 @@ $(document).ready(function(){
             alert("画像とコメントを入力してください。")
         }
     })
+
+    // リセットボタンを押下してlocalstorageをクリアする
+    $("#reset").on("click",function(){
+        localStorage.clear();
+        // $("#list").empty();
+      });
+
 })
 
 

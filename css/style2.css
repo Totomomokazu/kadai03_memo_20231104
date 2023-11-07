@@ -29,7 +29,12 @@ body {
 
 .wrap .upload .comment,
 .wrap .upload .post_btn {
-    text-align: center; /* 追加 */
+    text-align: center; 
+    margin: 10px auto;
+}
+
+.wrap .upload .reset_btn {
+    text-align: center; 
     margin: 10px auto;
 }
 
