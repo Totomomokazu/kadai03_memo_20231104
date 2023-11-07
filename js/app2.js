@@ -16,9 +16,9 @@ $(document).ready(function(){
         });
     });
     console.log("デフォルトのドラッグイベントのキャンセルに成功")
-
+})
     //ファイルがドロップされた時の処理
-    droparea.on("drop",function(e){ //dropareaで"drop"イベントが発生した場合
+    $("#droparea").on("drop",function(e){ //dropareaで"drop"イベントが発生した場合
         let files = e.originalEvent.dataTransfer.files; 
         //originalEventでdropイベントが起きたことを指定
         //dataTransferでドラッグアンドドロップされたデータ取得
@@ -75,6 +75,6 @@ $(document).ready(function(){
         // $("#list").empty();
       });
 
-})
+
 
 

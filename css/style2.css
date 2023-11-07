@@ -3,7 +3,7 @@ body {
 }
 
 .wrap {
-    background-color: greenyellow;
+    /* background-color: greenyellow; */
     width: 1200px;
     margin: 0 auto;
 }
@@ -45,4 +45,14 @@ body {
     /* margin-top: 20px; */
     /* display: none; */
     background-color: #ca0303;
+}
+
+
+
+.wrap .post {
+    background-color: rgb(238, 226, 63);
+}
+
+.wrap .post h4 {
+    text-align: center;
 }
