@@ -46,14 +46,14 @@ body {
     height: auto;
     /* margin-top: 20px; */
     /* display: none; */
-    background-color: #ca0303;
+    background-color: #f38080;
 }
 
 
 
 /* ここから下は投稿内容確認画面のcss */
 .wrap .post {
-    background-color: rgb(238, 226, 63);
+    background-color: rgb(156, 238, 63)
 }
 
 .wrap .post h4 {
@@ -85,3 +85,13 @@ body {
     text-align: center;
 }
 
+
+
+/* ここから先はレコメンドエリア */
+.wrap .recommend {
+    background-color: rgb(63, 238, 136);
+}
+
+.wrap .recommend h4 {
+    text-align: center;
+}

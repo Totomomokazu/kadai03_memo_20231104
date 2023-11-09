@@ -66,6 +66,21 @@ $(document).ready(function(){
        
             localStorage.setItem(count.toString(),JSON.stringify(obj));
             console.log("localstrageへの保存に成功")
+
+            const json_obj=JSON.parse(localStorage.getItem(count.toString()))
+            const html=`
+                <div class="post_details">
+                    <img src="${json_obj.img}" alt="投稿画像"></img>
+                    <p>${json_obj.comment}</p>
+                    <div class="like_button">
+                        <button id="like_button${count}" class="${count}">♥ いいね</button>
+                        <span class="like_count">0</span>
+                    </div>
+                </div>
+    `
+    $("#post_field").append(html)
+
+
         }else{
             alert("画像とコメントを入力してください。")
         }
@@ -87,7 +102,7 @@ for (let i=1;i<=count;i++){
             <img src="${json_obj.img}" alt="投稿画像"></img>
             <p>${json_obj.comment}</p>
             <div class="like_button">
-                <button>♥ いいね</button>
+                <button id="like_button${i}" class="${i}">♥ いいね</button>
                 <span class="like_count">0</span>
             </div>
           </div>
@@ -97,4 +112,8 @@ for (let i=1;i<=count;i++){
 
 console.log("投稿内容を表示しました")
 
+// いいねボタンの押下処理
+$("#like_button1").on("click",function(){
+    alert("テスト")
+})
 
