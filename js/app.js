@@ -1,60 +1,119 @@
-window.onload = function(){
-    console.log("ウィンドウを読み込みました")
-    let canvas = $("#canvas_test"); //canvasのidを取得
-    let ctx = canvas[0].getContext("2d"); //canvasが提供しているgetContext()というメソッドを利用。これを利用することでキャンバス上に図形やテキスト、画像などを描画できる ※getContext("2d")なので、今回の場合は2d描写
-    let img=new Image(); //jsで画像データを扱うために利用するコード。js内で画像データを動的に扱うためのオブジェクトを作成
-    console.log("変数を定義しました")
-    // img.crossOrigin="anonymous";
-    
-    console.log("imgタグにsrcを指定します。")
-    img.src="img/1.adventure mood.png";
-    console.log("imgタグにsrcを指定しました。")
+// alert("チェック")
 
-    img.onload=function(){ //画像が正常に読み込まれたときに実行する関数
-        ctx.drawImage(img,0,0); //キャンバス上にimg変数に格納されている画像を描画。この画像はキャンバスの(0,0)の位置に描画される。
-        console.log("画像を描画しました")
-        window.localStorage["img"]=canvas[0].toDataURL();//キャンバスに描画された画像をimgというキーを使い、imgのデータURLを取得。
-        console.log("画像をlocalstorageに保存しました。")
-        // $("#canvas_test").attr("src",window.localStorage["img"]);    
+// グルーバル変数の宣言
+const droparea = $("#droparea"); //ドロップエリアのオブジェクト情報を取得
+const comment=$("#comment"); //コメントのオブジェクト情報を取得
+const preview=$("#preview"); //プレビューエリアのオブジェクト情報を取得
+let filedata=null; //ファイルデータを入れる関数
+let count=localStorage.length ||0; //ドラッグアンドドロップした回数をカウントする用の変数
+console.log("変数の定義成功")
+
+
+//アップロード画面のコード
+$(document).ready(function(){
+    // ドラッグイベントのデフォルト動作をキャンセル
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(function(eventName) {
+        droparea.on(eventName, function(e) {
+            e.preventDefault();
+        });
+    });
+    console.log("デフォルトのドラッグイベントのキャンセルに成功")
+})
+    //ファイルがドロップされた時の処理
+    $("#droparea").on("drop",function(e){ //dropareaで"drop"イベントが発生した場合
+        let files = e.originalEvent.dataTransfer.files; 
+        //originalEventでdropイベントが起きたことを指定
+        //dataTransferでドラッグアンドドロップされたデータ取得
+        //filesで取得したデータがアイテムの場合、それぞれのファイルのリストを保持。ファイルAPIというやつらしい
+        console.log("画像のドロップに成功")
+
+        if(files.length>0){ //fileが1つ以上あるかチェック
+            filehandle(files[0]); //filehandle関数を実行する。引数にfiles[0]を代入
+        }
+
+    });
+
+    //ドロップされたファイルの処理
+    function filehandle(file){
+        const reader = new FileReader();//ファイルAPIの呼び出し
+        console.log("ファイルAPIの読み出し")
+        reader.readAsDataURL(file) //FileReaderのメソッドを呼び出し、fileの内容を読み込む.これが実行されたらonloadが開始される
+        console.log("ファイルの読み込み")
+        reader.onload = function(e){ //ファイルの読み込みが完了した時に実行されるイベント
+            preview.attr("src",e.target.result).show()
+            console.log("プレビュー表示")
+            //attrでsrc 属性の値にe.target.resultを代入
+            //target.resultにより読み込んだファイルの取得
+            //show()でpreview領域がdisplay:noneであっても表示できる
+            filedata=e.target.result //読み込んだファイルデータをfileDataという変数で保存
+            console.log("ファイルの一時保存")
+        };
     }
+    
+    //postボタンを押されたときの処理
+    $("#post").on("click",function(){
 
+        if(filedata && comment.val()){
+            let obj ={} //画像とコメントを格納する用のobjectを作成
+            count ++ //アップロードされた回数をカウント。これがlocalstorageに入れるキーになる
+            console.log("postボタン押下後の変数定義に成功")
+
+            obj={
+                img:filedata,
+                comment:comment.val()
+            }
+            console.log("objへの代入に成功")
+       
+            localStorage.setItem(count.toString(),JSON.stringify(obj));
+            console.log("localstrageへの保存に成功")
+
+            const json_obj=JSON.parse(localStorage.getItem(count.toString()))
+            const html=`
+                <div class="post_details">
+                    <img src="${json_obj.img}" alt="投稿画像"></img>
+                    <p>${json_obj.comment}</p>
+                    <div class="like_button">
+                        <button id="like_button${count}" class="${count}">♥ いいね</button>
+                        <span class="like_count">0</span>
+                    </div>
+                </div>
+    `
+    $("#post_field").append(html)
+
+
+        }else{
+            alert("画像とコメントを入力してください。")
+        }
+    })
+
+    // リセットボタンを押下してlocalstorageをクリアする
+    $("#reset").on("click",function(){
+        localStorage.clear();
+        // $("#list").empty();
+      });
+
+
+//投稿内容を確認するためのコード
+console.log("投稿内容の表示")
+for (let i=1;i<=count;i++){
+    const json_obj=JSON.parse(localStorage.getItem(i.toString()))
+    const html=`
+          <div class="post_details">
+            <img src="${json_obj.img}" alt="投稿画像"></img>
+            <p>${json_obj.comment}</p>
+            <div class="like_button">
+                <button id="like_button${i}" class="${i}">♥ いいね</button>
+                <span class="like_count">0</span>
+            </div>
+          </div>
+    `
+    $("#post_field").append(html)
 }
 
+console.log("投稿内容を表示しました")
 
+// いいねボタンの押下処理
+$("#like_button1").on("click",function(){
+    alert("テスト")
+})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// onload = function() {
-//     draw();
-//   };
-  
-//   function draw() {
-//     var canvas = document.getElementById('rectangle');
-//     if ( ! canvas || ! canvas.getContext ) {
-//       return false;
-//     }
-//     var cvs = canvas.getContext('2d');
-  
-//     /* rectangle */
-//     cvs.beginPath(); /* 図形を描き始めることを宣言 */
-//     cvs.moveTo(50, 50); /* 図形の描き始めを移動 */
-//     cvs.lineTo(150, 50); /* 図形の線の終わりを決める */
-//     cvs.lineTo(150, 150);
-//     cvs.lineTo(50, 150);
-//     cvs.closePath(); /* 描いた線を閉じる */
-//     cvs.stroke(); /* 描いた図形を線で表示させる */
-//   }

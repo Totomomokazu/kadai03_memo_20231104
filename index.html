@@ -4,28 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>MemoApp</title>
+    <title>Insta</title>
 </head>
 <body>
 
+    <div class="wrap">
+        <div class="upload">
+            <h4>post画面</h4>
+            <div id="droparea">ここに画像をドラッグ＆ドロップ</div>
+            <div class="preview">
+                <img id="preview" style="max-width: 300px;">
+            </div>
+            <div class="comment">
+                <textarea name="" id="comment" cols="40" rows="5"></textarea><br>
+            </div>
+            <div class="post_btn">
+                <button id="post">post</button>
+            </div>
 
-    <!-- canvasを指定 -->
-    <canvas  id="canvas_test" width="640" height="480">
+            <div class="reset_btn">
+                <button id="reset">reset</button>
+            </div>
+
+        </div>
 
 
-    </canvas>
+
+        <div class="post">
+            <h4>post画面</h4>
+            <div id="post_field"></div>
+        </div>
 
 
 
 
-    <!-- これは画像確認用のコード -->
-    <img src="img/1.adventure mood.png" alt="">
-    
+        <div class="recommend">
+            <h4>レコメンド画面</h4>
+            
+
+        </div>
+    </div>
+
+
+
+
+
 
     <!-- ここから下はjQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-    <!-- ここから下はjs -->
+    
+    <!-- ここから下がjs -->
     <script src="js/app.js"></script>
 </body>
 </html>
