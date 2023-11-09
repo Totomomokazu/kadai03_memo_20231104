@@ -8,6 +8,8 @@ body {
     margin: 0 auto;
 }
 
+
+/* ここから下はアップロード画面のCSS */
 .wrap .upload {
     background-color: rgb(112, 240, 129);
 }
@@ -49,6 +51,7 @@ body {
 
 
 
+/* ここから下は投稿内容確認画面のcss */
 .wrap .post {
     background-color: rgb(238, 226, 63);
 }
@@ -56,3 +59,29 @@ body {
 .wrap .post h4 {
     text-align: center;
 }
+
+.wrap .post #post_field {
+    background-color: aquamarine;
+    margin: 0 auto;
+    width: 90%;
+    display: grid;/* グリッドベースという2次元の配列に変換する */
+    /* grid-gap: 0; */
+    grid-template-columns:repeat(2, 1fr); /* グリッドの数列と行数を指定 */
+}
+
+.wrap .post #post_field .post_details {
+    background-color:white;
+    width: 50%;
+}
+
+.wrap .post #post_field .post_details img {
+    width: 100%;
+}
+
+.wrap .post #post_field .post_details p {
+    text-align: center;
+}
+.wrap .post #post_field .post_details .like_button {
+    text-align: center;
+}
+

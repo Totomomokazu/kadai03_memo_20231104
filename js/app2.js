@@ -5,9 +5,11 @@ const droparea = $("#droparea"); //ドロップエリアのオブジェクト情
 const comment=$("#comment"); //コメントのオブジェクト情報を取得
 const preview=$("#preview"); //プレビューエリアのオブジェクト情報を取得
 let filedata=null; //ファイルデータを入れる関数
-let count=0; //ドラッグアンドドロップした回数をカウントする用の変数
+let count=localStorage.length ||0; //ドラッグアンドドロップした回数をカウントする用の変数
 console.log("変数の定義成功")
 
+
+//アップロード画面のコード
 $(document).ready(function(){
     // ドラッグイベントのデフォルト動作をキャンセル
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(function(eventName) {
@@ -76,5 +78,23 @@ $(document).ready(function(){
       });
 
 
+//投稿内容を確認するためのコード
+console.log("投稿内容の表示")
+for (let i=1;i<=count;i++){
+    const json_obj=JSON.parse(localStorage.getItem(i.toString()))
+    const html=`
+          <div class="post_details">
+            <img src="${json_obj.img}" alt="投稿画像"></img>
+            <p>${json_obj.comment}</p>
+            <div class="like_button">
+                <button>♥ いいね</button>
+                <span class="like_count">0</span>
+            </div>
+          </div>
+    `
+    $("#post_field").append(html)
+}
+
+console.log("投稿内容を表示しました")
 
 
