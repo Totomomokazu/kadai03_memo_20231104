@@ -132,54 +132,86 @@ $("#post_field").on("click",".like_button button",function(){ //#post_field 内�
     console.log(num)
 
     //レコメンド画面の表示
+    
+    
     //①押下したkeyの取得はlet num = id.replace("like_button","")で対応されている。
     // 押下したpostのキーが奇数か偶数かでレコメンドを分岐する
-    if (num %2 === 0){
-        console.log("2で割り切れる数字",num %2)
-    //②取得したidを使い、localStorageからデータを取得
-    //localStorageから抽出したデータをparseでobjに変換し、json_recommend_objに格納
-    const json_recommend_obj=JSON.parse(localStorage.getItem(num.toString()))
-    
-    //③取得したデータを表示
-    const html=`
-          <div class="recommend_details">
-            <img src="${json_recommend_obj.img}" alt="投稿画像"></img>
-            <p>${json_recommend_obj.comment}</p>
-            <div class="like_button">
-                <button id="like_button${num}" class="${num}">♥ いいね</button>
-                <span id="like_count${num}" class="like_count">0</span> 
-            </div>
-          </div>
-    `
-    //↑spanタグだと改行にならない。インライン要素なので。
-    $("#recommend_field").append(html)
-    
+    if (num % 2 ===0){
+        displayRecommend("even");//関数で処理
     } else{
-        console.log("2で割り切れない数字",num%2)
-        //②取得したidを使い、localStorageからデータを取得
-        //localStorageから抽出したデータをparseでobjに変換し、json_recommend_objに格納
-        const json_recommend_obj=JSON.parse(localStorage.getItem(num.toString()))
-        
-        //③取得したデータを表示
-        const html=`
-            <div class="recommend_details">
-                <img src="${json_recommend_obj.img}" alt="投稿画像"></img>
-                <p>${json_recommend_obj.comment}</p>
-                <div class="like_button">
-                    <button id="like_button${num}" class="${num}">♥ いいね</button>
-                    <span id="like_count${num}" class="like_count">0</span> 
-                </div>
-            </div>
-        `
-        //↑spanタグだと改行にならない。インライン要素なので。
-        $("#recommend_field").append(html)
-    
+        displayRecommend("odd");
     }
 
+    function displayRecommend(type){
+        $("#recommend_field").empty(); //既存のレコメンドエリアを空にする
+
+        for ( i =1 ; i<= localStorage.length ; i++){
+            if (type==="even" && i % 2 ===0 || type==="odd" && i % 2 !==0){
+                //②取得したidを使い、localStorageからデータを取得
+                //localStorageから抽出したデータをparseでobjに変換し、json_recommend_objに格納
+                const json_recommend_obj=JSON.parse(localStorage.getItem(i.toString()))
+                //③取得したデータを表示
+                const html=`
+                            <div class="recommend_details">
+                                <img src="${json_recommend_obj.img}" alt="投稿画像"></img>
+                                <p>${json_recommend_obj.comment}</p>
+                                <div class="like_button">
+                                    <button id="like_button${num}" class="${num}">♥ いいね</button>
+                                    <span id="like_count${num}" class="like_count">0</span> 
+                                </div>
+                            </div>
+                            `;
+                $("#recommend_field").append(html)
+            }
+        }
+    }
+})
+
+
 
     
+    
+    
+    
+    // if (num %2 === 0){
+    //     console.log("2で割り切れる数字",num %2)
+    // //②取得したidを使い、localStorageからデータを取得
+    // //localStorageから抽出したデータをparseでobjに変換し、json_recommend_objに格納
+    // const json_recommend_obj=JSON.parse(localStorage.getItem(num.toString()))
+    
+    // //③取得したデータを表示
+    // const html=`
+    //       <div class="recommend_details">
+    //         <img src="${json_recommend_obj.img}" alt="投稿画像"></img>
+    //         <p>${json_recommend_obj.comment}</p>
+    //         <div class="like_button">
+    //             <button id="like_button${num}" class="${num}">♥ いいね</button>
+    //             <span id="like_count${num}" class="like_count">0</span> 
+    //         </div>
+    //       </div>
+    // `
+    // //↑spanタグだと改行にならない。インライン要素なので。
+    // $("#recommend_field").append(html)
+    
+    // } else{
+    //     console.log("2で割り切れない数字",num%2)
+    //     //②取得したidを使い、localStorageからデータを取得
+    //     //localStorageから抽出したデータをparseでobjに変換し、json_recommend_objに格納
+    //     const json_recommend_obj=JSON.parse(localStorage.getItem(num.toString()))
+        
+    //     //③取得したデータを表示
+    //     const html=`
+    //         <div class="recommend_details">
+    //             <img src="${json_recommend_obj.img}" alt="投稿画像"></img>
+    //             <p>${json_recommend_obj.comment}</p>
+    //             <div class="like_button">
+    //                 <button id="like_button${num}" class="${num}">♥ いいね</button>
+    //                 <span id="like_count${num}" class="like_count">0</span> 
+    //             </div>
+    //         </div>
+    //     `
+    //     //↑spanタグだと改行にならない。インライン要素なので。
+    //     $("#recommend_field").append(html)
+    
 
-
-
-})
 
