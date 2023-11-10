@@ -95,3 +95,26 @@ body {
 .wrap .recommend h4 {
     text-align: center;
 }
+
+.wrap .recommend #recommend_field {
+    background-color: rgb(127, 255, 170);
+    margin: 0 auto;
+    width: 90%;
+}
+
+.wrap .recommend #recommend_field .recommend_details {
+    background-color:white;
+    width: 50%;
+    margin: 10px auto;
+}
+
+.wrap .recommend #recommend_field .recommend_details img {
+    width: 100%;
+}
+
+.wrap .recommend #recommend_field .recommend_details p {
+    text-align: center;
+}
+.wrap .recommend #recommend_field .recommend_details .like_button {
+    text-align: center;
+}

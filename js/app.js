@@ -113,15 +113,73 @@ for (let i=1;i<=count;i++){
 
 console.log("投稿内容を表示しました")
 
-// いいねボタンの押下処理
+// いいねボタンの押下後の処理
 $("#post_field").on("click",".like_button button",function(){ //#post_field 内の .like_button button セレクタに対してクリックイベントを設定
-    let id = $(this).attr("id"); //ここでの $(this) は、クリックされたボタンを指す。.attr("id") は、そのボタンの id 属性の値を取得
+
+    //ボタン押下で使う変数の宣言    
+    let id = $(this).attr("id"); //ここでの $(this) は、クリックされたボタンを指す。.attr("id") は、そのボタンの id 属性の値を取得。
+    //thisはJavaScriptにおいて現在のコンテキスト・現在操作しているHTML要素を指す。attrはHTML要素の属性を取得または設定するために使われる。
     let num = id.replace("like_button","") //取得した id 値から "like_button" 文字列を除去し、残った部分（通常は数値）を num に代入
     console.log("いいねボタンの押下に成功")
 
+    //いいね数のカウント
     let likeCount = $("#like_count" + num); // <span>タグで指定しているidを作成している。like_count に num（ボタンのIDから抽出された番号）を連結した要素を取得。
-
     let like_count = parseInt(likeCount.text()) || 0; //likeCount.text() で、spanタグの数値を取得。parseInt() は、そのテキストを整数に変換。
     likeCount.text(like_count + 1); //like_countで取得した値に1を加える。ユーザーが「いいね」ボタンをクリックすると、関連する「いいね」カウントが1増え、その新しい数値が画面上で更新される
+    console.log("いいねボタン押下のカウント")
+
+    // let number = parseInt(id)%2
+    console.log(num)
+
+    //レコメンド画面の表示
+    //①押下したkeyの取得はlet num = id.replace("like_button","")で対応されている。
+    // 押下したpostのキーが奇数か偶数かでレコメンドを分岐する
+    if (num %2 === 0){
+        console.log("2で割り切れる数字",num %2)
+    //②取得したidを使い、localStorageからデータを取得
+    //localStorageから抽出したデータをparseでobjに変換し、json_recommend_objに格納
+    const json_recommend_obj=JSON.parse(localStorage.getItem(num.toString()))
+    
+    //③取得したデータを表示
+    const html=`
+          <div class="recommend_details">
+            <img src="${json_recommend_obj.img}" alt="投稿画像"></img>
+            <p>${json_recommend_obj.comment}</p>
+            <div class="like_button">
+                <button id="like_button${num}" class="${num}">♥ いいね</button>
+                <span id="like_count${num}" class="like_count">0</span> 
+            </div>
+          </div>
+    `
+    //↑spanタグだと改行にならない。インライン要素なので。
+    $("#recommend_field").append(html)
+    
+    } else{
+        console.log("2で割り切れない数字",num%2)
+        //②取得したidを使い、localStorageからデータを取得
+        //localStorageから抽出したデータをparseでobjに変換し、json_recommend_objに格納
+        const json_recommend_obj=JSON.parse(localStorage.getItem(num.toString()))
+        
+        //③取得したデータを表示
+        const html=`
+            <div class="recommend_details">
+                <img src="${json_recommend_obj.img}" alt="投稿画像"></img>
+                <p>${json_recommend_obj.comment}</p>
+                <div class="like_button">
+                    <button id="like_button${num}" class="${num}">♥ いいね</button>
+                    <span id="like_count${num}" class="like_count">0</span> 
+                </div>
+            </div>
+        `
+        //↑spanタグだと改行にならない。インライン要素なので。
+        $("#recommend_field").append(html)
+    
+    }
+
+
+    
+
+
+
 })
 
