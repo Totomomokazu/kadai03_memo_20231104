@@ -103,17 +103,25 @@ for (let i=1;i<=count;i++){
             <p>${json_obj.comment}</p>
             <div class="like_button">
                 <button id="like_button${i}" class="${i}">♥ いいね</button>
-                <span class="like_count">0</span>
+                <span id="like_count${i}" class="like_count">0</span> 
             </div>
           </div>
     `
+    //↑spanタグだと改行にならない。インライン要素なので。
     $("#post_field").append(html)
 }
 
 console.log("投稿内容を表示しました")
 
 // いいねボタンの押下処理
-$("#like_button1").on("click",function(){
-    alert("テスト")
+$("#post_field").on("click",".like_button button",function(){ //#post_field 内の .like_button button セレクタに対してクリックイベントを設定
+    let id = $(this).attr("id"); //ここでの $(this) は、クリックされたボタンを指す。.attr("id") は、そのボタンの id 属性の値を取得
+    let num = id.replace("like_button","") //取得した id 値から "like_button" 文字列を除去し、残った部分（通常は数値）を num に代入
+    console.log("いいねボタンの押下に成功")
+
+    let likeCount = $("#like_count" + num); // <span>タグで指定しているidを作成している。like_count に num（ボタンのIDから抽出された番号）を連結した要素を取得。
+
+    let like_count = parseInt(likeCount.text()) || 0; //likeCount.text() で、spanタグの数値を取得。parseInt() は、そのテキストを整数に変換。
+    likeCount.text(like_count + 1); //like_countで取得した値に1を加える。ユーザーが「いいね」ボタンをクリックすると、関連する「いいね」カウントが1増え、その新しい数値が画面上で更新される
 })
 
